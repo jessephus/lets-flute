@@ -1,5 +1,67 @@
-// Flute fingering data and note mappings
+// Flute fingering data based on professional fingering chart
+// Mapping keyboard keys to flute holes: A=LH1, S=LH2, D=LH3, F=RH1, G=RH2, H=RH3, J=RH4
+// Additional keys: K=Thumb, L=Bb lever, ;=C# trill
 const FLUTE_FINGERINGS = {
+    // First octave (low register)
+    'C': ['K', 'A', 'S', 'D', 'F', 'G', 'H', 'J'],    // Thumb + all fingers
+    'C#': ['K', 'A', 'S', 'D', 'F', 'G', 'H'],        // Thumb + all except RH4
+    'Db': ['K', 'A', 'S', 'D', 'F', 'G', 'H'],        // Same as C#
+    'D': ['K', 'A', 'S', 'D', 'F', 'G', 'H'],         // Thumb + all except RH4
+    'D#': ['K', 'A', 'S', 'D', 'F', 'G'],             // Thumb + first 5
+    'Eb': ['K', 'A', 'S', 'D', 'F', 'G'],             // Same as D#
+    'E': ['K', 'A', 'S', 'D', 'F', 'G'],              // Thumb + first 5
+    'F': ['K', 'A', 'S', 'D', 'F'],                   // Thumb + first 4
+    'F#': ['K', 'A', 'S', 'D'],                       // Thumb + first 3
+    'Gb': ['K', 'A', 'S', 'D'],                       // Same as F#
+    'G': ['K', 'A', 'S', 'D'],                        // Thumb + first 3
+    'G#': ['K', 'A', 'S'],                            // Thumb + first 2
+    'Ab': ['K', 'A', 'S'],                            // Same as G#
+    'A': ['K', 'A', 'S'],                             // Thumb + first 2
+    'A#': ['K', 'A', 'L'],                            // Thumb + LH1 + Bb lever
+    'Bb': ['K', 'A', 'L'],                            // Same as A#
+    'B': ['K', 'A'],                                  // Thumb + LH1
+    
+    // Second octave (middle register)
+    'C2': ['K'],                                       // Thumb only
+    'C#2': ['A', 'S', 'D', 'F', 'G', 'H'],           // All fingers, no thumb
+    'Db2': ['A', 'S', 'D', 'F', 'G', 'H'],           // Same as C#2
+    'D2': ['A', 'S', 'D', 'F', 'G', 'H'],            // All fingers, no thumb
+    'D#2': ['A', 'S', 'D', 'F', 'G'],                // First 5, no thumb
+    'Eb2': ['A', 'S', 'D', 'F', 'G'],                // Same as D#2
+    'E2': ['A', 'S', 'D', 'F', 'G'],                 // First 5, no thumb
+    'F2': ['A', 'S', 'D', 'F'],                      // First 4, no thumb
+    'F#2': ['A', 'S', 'D'],                          // First 3, no thumb
+    'Gb2': ['A', 'S', 'D'],                          // Same as F#2
+    'G2': ['A', 'S', 'D'],                           // First 3, no thumb
+    'G#2': ['A', 'S'],                               // First 2, no thumb
+    'Ab2': ['A', 'S'],                               // Same as G#2
+    'A2': ['A', 'S'],                                // First 2, no thumb
+    'A#2': ['A', 'L'],                               // LH1 + Bb lever, no thumb
+    'Bb2': ['A', 'L'],                               // Same as A#2
+    'B2': ['A'],                                     // LH1 only, no thumb
+    
+    // Third octave (high register)
+    'C3': [],                                        // Open (no keys)
+    'C#3': ['S', 'D', 'F', 'G', 'H'],               // All except LH1 and thumb
+    'Db3': ['S', 'D', 'F', 'G', 'H'],               // Same as C#3
+    'D3': ['S', 'D', 'F', 'G', 'H'],                // All except LH1 and thumb
+    'D#3': ['S', 'D', 'F', 'G'],                    // First 4 except LH1, no thumb
+    'Eb3': ['S', 'D', 'F', 'G'],                    // Same as D#3
+    'E3': ['S', 'D', 'F', 'G'],                     // First 4 except LH1, no thumb
+    'F3': ['S', 'D', 'F'],                          // First 3 except LH1, no thumb
+    'F#3': ['S', 'D'],                              // First 2 except LH1, no thumb
+    'Gb3': ['S', 'D'],                              // Same as F#3
+    'G3': ['S', 'D'],                               // First 2 except LH1, no thumb
+    'G#3': ['S'],                                   // LH2 only
+    'Ab3': ['S'],                                   // Same as G#3
+    'A3': ['S'],                                    // LH2 only
+    'A#3': ['L'],                                   // Bb lever only
+    'Bb3': ['L'],                                   // Same as A#3
+    'B3': [],                                       // Open (no keys)
+};
+
+// Simplified fingerings for basic learning (used in current songs)
+const BASIC_FINGERINGS = {
     'C': ['A', 'S', 'D', 'F', 'G', 'H', 'J'],  // All keys down
     'D': ['A', 'S', 'D', 'F', 'G', 'H'],        // All except J
     'E': ['A', 'S', 'D', 'F', 'G'],              // First 5 keys
