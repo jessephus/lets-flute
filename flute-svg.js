@@ -7,22 +7,23 @@ class FluteSVG {
         this.currentNote = 'C';
         
         // Complete fingering chart data matching the game's note names
+        // Now includes both thumb keys: thumb (main) and thumbBb (Bb lever)
         this.fingeringData = {
-            'C': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false },
-            'D': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
-            'E': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'F': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'G': { thumb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'A': { thumb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'B': { thumb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'C2': { thumb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'C': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false },
+            'D': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
+            'E': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'F': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'G': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'A': { thumb: true, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'B': { thumb: true, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'C2': { thumb: false, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
             
-            // Additional notes for extended songs
-            'C#': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
-            'D#': { thumb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'F#': { thumb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'G#': { thumb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'A#': { thumb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }
+            // Additional notes for extended songs - Bb lever used for A#/Bb
+            'C#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
+            'D#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'F#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'G#': { thumb: true, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'A#': { thumb: true, thumbBb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }
         };
         
         this.createFingeringChart();
@@ -52,30 +53,49 @@ class FluteSVG {
     }
 
     createChartElements(svg) {
-        // Left side - Thumb Bb key (rectangular with rounded bottom)
+        // Left side - Both thumb keys
         const thumbGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        thumbGroup.setAttribute('id', 'thumb-key');
+        thumbGroup.setAttribute('id', 'thumb-keys');
         
-        // Thumb Bb shape - like in the diagram
+        // Main Thumb button (upper, larger)
         const thumbPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        thumbPath.setAttribute('d', 'M20 50 L20 40 Q20 35 25 35 L35 35 Q40 35 40 40 L40 90 Q40 95 35 95 L25 95 Q20 95 20 90 Z');
+        thumbPath.setAttribute('d', 'M15 35 L15 25 Q15 20 20 20 L35 20 Q40 20 40 25 L40 65 Q40 70 35 70 L20 70 Q15 70 15 65 Z');
         thumbPath.setAttribute('fill', 'white');
         thumbPath.setAttribute('stroke', '#333');
         thumbPath.setAttribute('stroke-width', '2');
         thumbPath.setAttribute('id', 'thumb-fill');
         
-        // Thumb label
+        // Thumb Bb lever (lower, smaller)
+        const thumbBbPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        thumbBbPath.setAttribute('d', 'M20 75 L20 70 Q20 68 22 68 L33 68 Q35 68 35 70 L35 85 Q35 87 33 87 L22 87 Q20 87 20 85 Z');
+        thumbBbPath.setAttribute('fill', 'white');
+        thumbBbPath.setAttribute('stroke', '#333');
+        thumbBbPath.setAttribute('stroke-width', '2');
+        thumbBbPath.setAttribute('id', 'thumb-bb-fill');
+        
+        // Thumb labels
         const thumbLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        thumbLabel.setAttribute('x', '30');
+        thumbLabel.setAttribute('x', '27');
         thumbLabel.setAttribute('y', '110');
         thumbLabel.setAttribute('text-anchor', 'middle');
         thumbLabel.setAttribute('font-family', 'Arial, sans-serif');
-        thumbLabel.setAttribute('font-size', '10');
+        thumbLabel.setAttribute('font-size', '9');
         thumbLabel.setAttribute('fill', '#666');
-        thumbLabel.textContent = 'Thumb Bb';
+        thumbLabel.textContent = 'Thumb';
+        
+        const thumbBbLabel = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+        thumbBbLabel.setAttribute('x', '27');
+        thumbBbLabel.setAttribute('y', '120');
+        thumbBbLabel.setAttribute('text-anchor', 'middle');
+        thumbBbLabel.setAttribute('font-family', 'Arial, sans-serif');
+        thumbBbLabel.setAttribute('font-size', '9');
+        thumbBbLabel.setAttribute('fill', '#666');
+        thumbBbLabel.textContent = 'Bb lever';
         
         thumbGroup.appendChild(thumbPath);
+        thumbGroup.appendChild(thumbBbPath);
         thumbGroup.appendChild(thumbLabel);
+        thumbGroup.appendChild(thumbBbLabel);
         svg.appendChild(thumbGroup);
 
         // Main tone holes - Left hand (LH1, LH2, LH3) with different sizes
@@ -369,8 +389,9 @@ class FluteSVG {
             noteDisplay.textContent = noteName;
         }
 
-        // Update thumb key
+        // Update thumb keys - now handles both!
         this.updateKeyState('thumb-fill', fingering.thumb);
+        this.updateKeyState('thumb-bb-fill', fingering.thumbBb);
         
         // Update main holes
         this.updateKeyState('lh1-fill', fingering.lh1);
@@ -412,6 +433,7 @@ class FluteSVG {
         const previewColor = '#FFF3E0'; // Light orange for preview
 
         if (fingering.thumb) this.setPreviewState('thumb-fill', previewColor);
+        if (fingering.thumbBb) this.setPreviewState('thumb-bb-fill', previewColor);
         if (fingering.lh1) this.setPreviewState('lh1-fill', previewColor);
         if (fingering.lh2) this.setPreviewState('lh2-fill', previewColor);
         if (fingering.lh3) this.setPreviewState('lh3-fill', previewColor);
@@ -453,6 +475,7 @@ class FluteSVG {
 
         // Reset all keys
         this.updateKeyState('thumb-fill', false);
+        this.updateKeyState('thumb-bb-fill', false);
         this.updateKeyState('lh1-fill', false);
         this.updateKeyState('lh2-fill', false);
         this.updateKeyState('lh3-fill', false);
@@ -482,6 +505,7 @@ class FluteSVG {
         const hitColor = '#4CAF50';
         
         if (fingering.thumb) this.flashKey('thumb-fill', hitColor);
+        if (fingering.thumbBb) this.flashKey('thumb-bb-fill', hitColor);
         if (fingering.lh1) this.flashKey('lh1-fill', hitColor);
         if (fingering.lh2) this.flashKey('lh2-fill', hitColor);
         if (fingering.lh3) this.flashKey('lh3-fill', hitColor);
