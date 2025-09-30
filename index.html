@@ -10,12 +10,12 @@
     <div id="game-container">
         <header>
             <h1>Let's Flute 🎵</h1>
-            <div id="score-display">Score: <span id="score">0</span></div>
+            <div id="tempo-display">🎼 Follow Along Guide</div>
         </header>
 
         <div id="main-menu" class="screen">
             <h2>Welcome to Let's Flute!</h2>
-            <p>Learn to play the flute through rhythm gameplay</p>
+            <p>🎵 A visual and audio guide for flute players 🎵</p>
             
             <div class="song-selection">
                 <h3>Select a Song:</h3>
@@ -24,12 +24,13 @@
                 </div>
             </div>
             
-            <button id="start-button" class="game-button">Start Game</button>
+            <button id="start-button" class="game-button">▶️ Play Song</button>
             <div class="instructions">
-                <h3>How to Play:</h3>
-                <p>Press the keys shown on the flute diagram when the notes reach the target line!</p>
-                <p>Keys: A, S, D, F, G, H, J for the flute keys</p>
-                <p>Watch the flute diagram to see which keys to press for upcoming notes!</p>
+                <h3>How to Use:</h3>
+                <p>🎼 Watch the falling notes and listen to the melody</p>
+                <p>🎵 Play along on your real flute using the visual guide</p>
+                <p>📊 The flute diagram shows which keys to press for each note</p>
+                <p>🎯 Notes will automatically play when they reach the red target line</p>
             </div>
         </div>
 
@@ -71,21 +72,21 @@
             </div>
 
             <div id="game-controls">
-                <button id="pause-button" class="game-button">Pause</button>
+                <button id="pause-button" class="game-button">⏸️ Pause</button>
             </div>
         </div>
 
         <div id="pause-menu" class="screen hidden">
-            <h2>Paused</h2>
-            <button id="resume-button" class="game-button">Resume</button>
-            <button id="quit-button" class="game-button">Quit to Menu</button>
+            <h2>⏸️ Paused</h2>
+            <button id="resume-button" class="game-button">▶️ Resume</button>
+            <button id="quit-button" class="game-button">🏠 Back to Menu</button>
         </div>
 
         <div id="game-over-screen" class="screen hidden">
-            <h2>Great Job!</h2>
-            <p>Final Score: <span id="final-score">0</span></p>
-            <button id="play-again-button" class="game-button">Play Again</button>
-            <button id="menu-button" class="game-button">Main Menu</button>
+            <h2>🎵 Song Complete! 🎵</h2>
+            <p id="final-score">Great job playing along!</p>
+            <button id="play-again-button" class="game-button">🔄 Play Again</button>
+            <button id="menu-button" class="game-button">🏠 Song Menu</button>
         </div>
     </div>
 
