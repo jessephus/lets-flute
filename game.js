@@ -32,6 +32,9 @@ class FluteGame {
         this.targetY = 340; // Y position of the target line
         this.previewTime = 1.5; // seconds ahead to preview upcoming note
         
+        // Initialize SVG Flute
+        this.fluteSVG = null;
+        
         this.initializeCanvas();
         this.setupEventListeners();
         this.createSongButtons();
@@ -280,6 +283,11 @@ class FluteGame {
             await this.initializeAudio();
         }
         
+        // Initialize SVG Flute if not already initialized
+        if (!this.fluteSVG) {
+            this.fluteSVG = new FluteSVG('flute-diagram');
+        }
+        
         this.state = GameState.PLAYING;
         this.notes = this.createNoteObjects(this.currentSong);
         this.startTime = Date.now();
@@ -386,40 +394,21 @@ class FluteGame {
             (note.time - this.currentTime) <= this.previewTime
         );
 
-        // Clear all preview highlights
-        VALID_FLUTE_KEYS.forEach(key => {
-            const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
-            if (keyElement) {
-                keyElement.classList.remove('preview');
+        // Use SVG flute preview if available
+        if (this.fluteSVG) {
+            if (upcomingNote) {
+                this.fluteSVG.showPreview(upcomingNote.requiredKeys);
+            } else {
+                this.fluteSVG.clearPreview();
             }
-        });
-
-        // Add preview highlight to upcoming note keys
-        if (upcomingNote) {
-            upcomingNote.requiredKeys.forEach(key => {
-                const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
-                if (keyElement) {
-                    keyElement.classList.add('preview');
-                }
-            });
         }
     }
 
     showHitFeedback(note) {
-        // Visual feedback is handled through CSS animations
-        note.requiredKeys.forEach(key => {
-            const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
-            if (keyElement) {
-                const indicator = keyElement.querySelector('.key-indicator');
-                if (indicator) {
-                    // Trigger animation by removing and re-adding
-                    indicator.style.animation = 'none';
-                    setTimeout(() => {
-                        indicator.style.animation = 'pulse 0.5s';
-                    }, 10);
-                }
-            }
-        });
+        // Use SVG flute feedback if available
+        if (this.fluteSVG) {
+            this.fluteSVG.triggerHitFeedback(note.requiredKeys);
+        }
     }
 
     updateNotes() {
