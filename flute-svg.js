@@ -13,7 +13,31 @@ class FluteSVG {
             'H': false,
             'J': false
         };
+        // Animation constants
+        this.ANIMATION_DURATION_MS = 300;
+        
+        // Cache for DOM elements
+        this.keyElements = {};
+        this.previewElements = {};
+        this.highlightElements = {};
+        this.labelElements = {};
+        
         this.createFluteSVG();
+        this.cacheKeyElements();
+    }
+    
+    cacheKeyElements() {
+        // Cache DOM elements to avoid repeated queries
+        const keys = ['A', 'S', 'D', 'F', 'G', 'H', 'J'];
+        keys.forEach(key => {
+            const keyGroup = this.container.querySelector(`[data-key="${key}"]`);
+            if (keyGroup) {
+                this.keyElements[key] = keyGroup;
+                this.previewElements[key] = keyGroup.querySelector('.key-preview');
+                this.highlightElements[key] = keyGroup.querySelector('.key-highlight');
+                this.labelElements[key] = keyGroup.querySelector('.key-label');
+            }
+        });
     }
 
     createFluteSVG() {
@@ -21,6 +45,8 @@ class FluteSVG {
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 800 200');
         svg.setAttribute('id', 'flute-svg');
+        svg.setAttribute('role', 'img');
+        svg.setAttribute('aria-label', 'Interactive flute diagram showing finger positions for notes');
         svg.style.width = '100%';
         svg.style.height = 'auto';
 
@@ -222,40 +248,38 @@ class FluteSVG {
 
     // Show preview for upcoming note
     showPreview(requiredKeys) {
-        // Clear all previews first
-        const allPreviews = this.container.querySelectorAll('.key-preview');
-        allPreviews.forEach(preview => {
-            preview.setAttribute('opacity', '0');
+        // Clear all previews first using cached elements
+        Object.values(this.previewElements).forEach(preview => {
+            if (preview) {
+                preview.setAttribute('opacity', '0');
+            }
         });
 
         // Show preview for required keys
         requiredKeys.forEach(key => {
-            const keyGroup = this.container.querySelector(`[data-key="${key}"]`);
-            if (keyGroup) {
-                const preview = keyGroup.querySelector('.key-preview');
-                if (preview) {
-                    preview.setAttribute('opacity', '0.7');
-                }
+            const preview = this.previewElements[key];
+            if (preview) {
+                preview.setAttribute('opacity', '0.7');
             }
         });
     }
 
     // Clear all previews
     clearPreview() {
-        const allPreviews = this.container.querySelectorAll('.key-preview');
-        allPreviews.forEach(preview => {
-            preview.setAttribute('opacity', '0');
+        Object.values(this.previewElements).forEach(preview => {
+            if (preview) {
+                preview.setAttribute('opacity', '0');
+            }
         });
     }
 
     // Render current key states
     renderKeyStates() {
         Object.keys(this.keyStates).forEach(key => {
-            const keyGroup = this.container.querySelector(`[data-key="${key}"]`);
-            if (keyGroup) {
-                const highlight = keyGroup.querySelector('.key-highlight');
-                const label = keyGroup.querySelector('.key-label');
-                
+            const highlight = this.highlightElements[key];
+            const label = this.labelElements[key];
+            
+            if (highlight && label) {
                 if (this.keyStates[key]) {
                     // Key is active (pressed)
                     highlight.setAttribute('opacity', '0.9');
@@ -272,42 +296,18 @@ class FluteSVG {
     // Trigger visual feedback animation for a note hit
     triggerHitFeedback(requiredKeys) {
         requiredKeys.forEach(key => {
-            const keyGroup = this.container.querySelector(`[data-key="${key}"]`);
-            if (keyGroup) {
-                const highlight = keyGroup.querySelector('.key-highlight');
-                
-                // Create pulse animation
+            const highlight = this.highlightElements[key];
+            
+            if (highlight) {
+                // Use CSS class for animation instead of creating SVG animation elements
                 highlight.setAttribute('opacity', '1');
+                highlight.classList.add('hit-pulse');
                 
-                // Animate the highlight
-                const animation = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-                animation.setAttribute('attributeName', 'r');
-                animation.setAttribute('from', '18');
-                animation.setAttribute('to', '25');
-                animation.setAttribute('dur', '0.3s');
-                animation.setAttribute('begin', 'indefinite');
-                animation.setAttribute('fill', 'freeze');
-                
-                const opacityAnim = document.createElementNS('http://www.w3.org/2000/svg', 'animate');
-                opacityAnim.setAttribute('attributeName', 'opacity');
-                opacityAnim.setAttribute('from', '1');
-                opacityAnim.setAttribute('to', '0.9');
-                opacityAnim.setAttribute('dur', '0.3s');
-                opacityAnim.setAttribute('begin', 'indefinite');
-                opacityAnim.setAttribute('fill', 'freeze');
-                
-                highlight.appendChild(animation);
-                highlight.appendChild(opacityAnim);
-                
-                animation.beginElement();
-                opacityAnim.beginElement();
-                
-                // Reset after animation
+                // Remove class after animation completes
                 setTimeout(() => {
-                    highlight.setAttribute('r', '18');
-                    animation.remove();
-                    opacityAnim.remove();
-                }, 300);
+                    highlight.classList.remove('hit-pulse');
+                    highlight.setAttribute('opacity', '0.9');
+                }, this.ANIMATION_DURATION_MS);
             }
         });
     }
