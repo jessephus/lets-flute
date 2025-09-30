@@ -6,6 +6,9 @@ const GameState = {
     GAME_OVER: 'gameOver'
 };
 
+// Valid flute key mappings
+const VALID_FLUTE_KEYS = ['A', 'S', 'D', 'F', 'G', 'H', 'J'];
+
 class FluteGame {
     constructor() {
         this.canvas = document.getElementById('game-canvas');
@@ -136,7 +139,7 @@ class FluteGame {
     }
 
     isValidKey(key) {
-        return ['A', 'S', 'D', 'F', 'G', 'H', 'J'].includes(key);
+        return VALID_FLUTE_KEYS.includes(key);
     }
 
     activateKeyVisual(key) {
@@ -299,7 +302,7 @@ class FluteGame {
         // Center the note based on which keys are required
         let startX = 0;
         if (keysPressed > 0) {
-            const firstKeyIndex = ['A', 'S', 'D', 'F', 'G', 'H', 'J'].indexOf(note.requiredKeys[0]);
+            const firstKeyIndex = VALID_FLUTE_KEYS.indexOf(note.requiredKeys[0]);
             startX = firstKeyIndex * laneWidth;
         }
 
