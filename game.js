@@ -328,7 +328,7 @@ class FluteGame {
             hit: false,
             missed: false,
             played: false, // Track if note has been auto-played
-            requiredKeys: FLUTE_FINGERINGS[noteData.note] || [],
+            requiredKeys: BASIC_FINGERINGS[noteData.note] || [],
             color: NOTE_COLORS[noteData.note] || '#FFFFFF'
         }));
         
@@ -397,7 +397,7 @@ class FluteGame {
         // Use SVG flute preview if available
         if (this.fluteSVG) {
             if (upcomingNote) {
-                this.fluteSVG.showPreview(upcomingNote.requiredKeys);
+                this.fluteSVG.showPreview(upcomingNote.note);
             } else {
                 this.fluteSVG.clearPreview();
             }
@@ -407,7 +407,7 @@ class FluteGame {
     showHitFeedback(note) {
         // Use SVG flute feedback if available
         if (this.fluteSVG) {
-            this.fluteSVG.triggerHitFeedback(note.requiredKeys);
+            this.fluteSVG.triggerHitFeedback(note.note);
         }
     }
 
@@ -423,6 +423,12 @@ class FluteGame {
                     note.played = true;
                     this.playNoteSound(note.note);
                     this.showHitFeedback(note);
+                    
+                    // Update fingering chart to show current note
+                    if (this.fluteSVG) {
+                        this.fluteSVG.updateFingering(note.note);
+                    }
+                    
                     console.log(`Auto-playing note: ${note.note}`);
                 }
             }
