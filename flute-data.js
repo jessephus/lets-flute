@@ -22,8 +22,33 @@ const NOTE_COLORS = {
     'C2': '#FF6B9D'   // Pink
 };
 
-// Sample song data - Simple melody for beginners
-const SAMPLE_SONG = {
+// Song 1: C Major Scale - Perfect for beginners
+const C_MAJOR_SCALE = {
+    title: "C Major Scale",
+    bpm: 80,
+    notes: [
+        { note: 'C', time: 0, duration: 1 },
+        { note: 'D', time: 1, duration: 1 },
+        { note: 'E', time: 2, duration: 1 },
+        { note: 'F', time: 3, duration: 1 },
+        { note: 'G', time: 4, duration: 1 },
+        { note: 'A', time: 5, duration: 1 },
+        { note: 'B', time: 6, duration: 1 },
+        { note: 'C2', time: 7, duration: 2 },
+        
+        // Going back down
+        { note: 'B', time: 9, duration: 1 },
+        { note: 'A', time: 10, duration: 1 },
+        { note: 'G', time: 11, duration: 1 },
+        { note: 'F', time: 12, duration: 1 },
+        { note: 'E', time: 13, duration: 1 },
+        { note: 'D', time: 14, duration: 1 },
+        { note: 'C', time: 15, duration: 2 }
+    ]
+};
+
+// Song 2: Simple Flute Melody - Beginner-friendly tune
+const SIMPLE_MELODY = {
     title: "Simple Flute Melody",
     bpm: 90,
     notes: [
@@ -56,3 +81,9 @@ const SAMPLE_SONG = {
         { note: 'C2', time: 20, duration: 4 }
     ]
 };
+
+// Available songs for Phase 1 MVP
+const SONGS = [C_MAJOR_SCALE, SIMPLE_MELODY];
+
+// Default song
+const SAMPLE_SONG = C_MAJOR_SCALE;

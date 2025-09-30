@@ -19,6 +19,7 @@ class FluteGame {
         this.notes = [];
         this.activeKeys = new Set();
         this.currentSong = SAMPLE_SONG;
+        this.selectedSongIndex = 0;
         this.startTime = 0;
         this.currentTime = 0;
         this.animationId = null;
@@ -27,10 +28,39 @@ class FluteGame {
         this.noteSpeed = 150; // pixels per second
         this.hitWindow = 0.15; // seconds tolerance for hitting notes
         this.targetY = 340; // Y position of the target line
+        this.previewTime = 1.5; // seconds ahead to preview upcoming note
         
         this.initializeCanvas();
         this.setupEventListeners();
+        this.createSongButtons();
         this.showScreen('main-menu');
+    }
+
+    createSongButtons() {
+        const songList = document.getElementById('song-list');
+        songList.innerHTML = '';
+        
+        SONGS.forEach((song, index) => {
+            const button = document.createElement('button');
+            button.className = 'song-button' + (index === this.selectedSongIndex ? ' selected' : '');
+            button.textContent = song.title;
+            button.addEventListener('click', () => this.selectSong(index));
+            songList.appendChild(button);
+        });
+    }
+
+    selectSong(index) {
+        this.selectedSongIndex = index;
+        this.currentSong = SONGS[index];
+        
+        // Update button styling
+        document.querySelectorAll('.song-button').forEach((btn, i) => {
+            if (i === index) {
+                btn.classList.add('selected');
+            } else {
+                btn.classList.remove('selected');
+            }
+        });
     }
 
     initializeCanvas() {
@@ -161,6 +191,14 @@ class FluteGame {
             this.deactivateKeyVisual(key);
         });
         this.activeKeys.clear();
+        
+        // Also clear preview highlights
+        VALID_FLUTE_KEYS.forEach(key => {
+            const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
+            if (keyElement) {
+                keyElement.classList.remove('preview');
+            }
+        });
     }
 
     checkNoteHit() {
@@ -227,6 +265,7 @@ class FluteGame {
         this.currentTime = (Date.now() - this.startTime) / 1000;
         this.updateNotes();
         this.checkMissedNotes();
+        this.updateUpcomingNotePreview();
         this.render();
 
         // Check if game is over
@@ -234,6 +273,33 @@ class FluteGame {
             this.endGame();
         } else {
             this.animationId = requestAnimationFrame(() => this.gameLoop());
+        }
+    }
+
+    updateUpcomingNotePreview() {
+        // Find the next upcoming note within preview time
+        const upcomingNote = this.notes.find(note => 
+            !note.hit && !note.missed && 
+            (note.time - this.currentTime) > 0 && 
+            (note.time - this.currentTime) <= this.previewTime
+        );
+
+        // Clear all preview highlights
+        VALID_FLUTE_KEYS.forEach(key => {
+            const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
+            if (keyElement) {
+                keyElement.classList.remove('preview');
+            }
+        });
+
+        // Add preview highlight to upcoming note keys
+        if (upcomingNote) {
+            upcomingNote.requiredKeys.forEach(key => {
+                const keyElement = document.getElementById(`key-${key.toLowerCase()}`);
+                if (keyElement) {
+                    keyElement.classList.add('preview');
+                }
+            });
         }
     }
 

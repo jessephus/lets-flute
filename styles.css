@@ -83,6 +83,52 @@ header h1 {
     font-size: 1em;
 }
 
+.song-selection {
+    margin: 30px 0;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 10px;
+}
+
+.song-selection h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.3em;
+}
+
+.song-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.song-button {
+    background: white;
+    border: 2px solid #667eea;
+    color: #667eea;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: 500;
+}
+
+.song-button:hover {
+    background: #667eea;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.song-button.selected {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #764ba2;
+}
+
 .game-button {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
@@ -167,6 +213,23 @@ header h1 {
     color: white;
     transform: scale(0.95);
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+.flute-key.preview {
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+    color: white;
+    border-color: #FF8C00;
+    box-shadow: 0 4px 15px rgba(255, 215, 0, 0.5);
+    animation: preview-pulse 1s infinite;
+}
+
+@keyframes preview-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
 }
 
 .key-indicator {
