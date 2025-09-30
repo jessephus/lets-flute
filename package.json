@@ -1,0 +1,21 @@
+{
+  "name": "lets-flute",
+  "version": "1.0.0",
+  "description": "A web-based rhythm game designed to teach children how to play the orchestral flute",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8080",
+    "test": "echo \"No tests yet\" && exit 0"
+  },
+  "keywords": [
+    "flute",
+    "rhythm-game",
+    "education",
+    "music"
+  ],
+  "author": "Jesse Geraci",
+  "license": "MIT",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

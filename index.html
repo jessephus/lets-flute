@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Flute - Learn to Play Flute</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>Let's Flute 🎵</h1>
+            <div id="score-display">Score: <span id="score">0</span></div>
+        </header>
+
+        <div id="main-menu" class="screen">
+            <h2>Welcome to Let's Flute!</h2>
+            <p>Learn to play the flute through rhythm gameplay</p>
+            <button id="start-button" class="game-button">Start Game</button>
+            <div class="instructions">
+                <h3>How to Play:</h3>
+                <p>Press the keys shown on the flute diagram when the notes reach the target line!</p>
+                <p>Keys: A, S, D, F, G, H, J for the flute keys</p>
+            </div>
+        </div>
+
+        <div id="game-screen" class="screen hidden">
+            <div id="track-container">
+                <canvas id="game-canvas"></canvas>
+                <div id="target-line"></div>
+            </div>
+            
+            <div id="flute-diagram">
+                <div class="flute-key" data-key="A" id="key-a">
+                    <span>A</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="S" id="key-s">
+                    <span>S</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="D" id="key-d">
+                    <span>D</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="F" id="key-f">
+                    <span>F</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="G" id="key-g">
+                    <span>G</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="H" id="key-h">
+                    <span>H</span>
+                    <div class="key-indicator"></div>
+                </div>
+                <div class="flute-key" data-key="J" id="key-j">
+                    <span>J</span>
+                    <div class="key-indicator"></div>
+                </div>
+            </div>
+
+            <div id="game-controls">
+                <button id="pause-button" class="game-button">Pause</button>
+            </div>
+        </div>
+
+        <div id="pause-menu" class="screen hidden">
+            <h2>Paused</h2>
+            <button id="resume-button" class="game-button">Resume</button>
+            <button id="quit-button" class="game-button">Quit to Menu</button>
+        </div>
+
+        <div id="game-over-screen" class="screen hidden">
+            <h2>Great Job!</h2>
+            <p>Final Score: <span id="final-score">0</span></p>
+            <button id="play-again-button" class="game-button">Play Again</button>
+            <button id="menu-button" class="game-button">Main Menu</button>
+        </div>
+    </div>
+
+    <script src="flute-data.js"></script>
+    <script src="game.js"></script>
+</body>
+</html>
