@@ -20,7 +20,6 @@ class FluteSVG {
         this.keyElements = {};
         this.previewElements = {};
         this.highlightElements = {};
-        this.labelElements = {};
         
         this.createFluteSVG();
         this.cacheKeyElements();
@@ -35,7 +34,6 @@ class FluteSVG {
                 this.keyElements[key] = keyGroup;
                 this.previewElements[key] = keyGroup.querySelector('.key-preview');
                 this.highlightElements[key] = keyGroup.querySelector('.key-highlight');
-                this.labelElements[key] = keyGroup.querySelector('.key-label');
             }
         });
     }
@@ -180,22 +178,10 @@ class FluteSVG {
         preview.setAttribute('opacity', '0');
         preview.setAttribute('class', 'key-preview');
 
-        // Label text
-        const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-        text.setAttribute('x', keyPos.x);
-        text.setAttribute('y', keyPos.y + 5);
-        text.setAttribute('text-anchor', 'middle');
-        text.setAttribute('font-size', '16');
-        text.setAttribute('font-weight', 'bold');
-        text.setAttribute('fill', '#333');
-        text.setAttribute('class', 'key-label');
-        text.textContent = keyPos.label;
-
         g.appendChild(outerRing);
         g.appendChild(innerPad);
         g.appendChild(highlight);
         g.appendChild(preview);
-        g.appendChild(text);
 
         return g;
     }
@@ -277,17 +263,14 @@ class FluteSVG {
     renderKeyStates() {
         Object.keys(this.keyStates).forEach(key => {
             const highlight = this.highlightElements[key];
-            const label = this.labelElements[key];
             
-            if (highlight && label) {
+            if (highlight) {
                 if (this.keyStates[key]) {
                     // Key is active (pressed)
                     highlight.setAttribute('opacity', '0.9');
-                    label.setAttribute('fill', '#fff');
                 } else {
                     // Key is inactive
                     highlight.setAttribute('opacity', '0');
-                    label.setAttribute('fill', '#333');
                 }
             }
         });
