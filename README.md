@@ -36,7 +36,7 @@ A **visual and audio guide** for flute players to learn and practice with beauti
 - **Smooth 60fps animations** using Canvas API
 
 ### 🎓 **Educational**
-- **Real flute fingerings** - based on actual orchestral flute technique
+- **Authentic flute fingerings** - based on professional orchestral flute fingering charts
 - **Progressive songs** from simple scales to melodies
 - **Visual timing guides** to help with rhythm
 - **Perfect for beginners** and experienced players
@@ -63,20 +63,20 @@ Simply open `index.html` in a modern web browser.
 
 ## 🎼 Flute Fingering Reference
 
-The visual guide shows these authentic flute fingerings:
+The visual guide shows these authentic flute fingerings based on professional fingering charts:
 
-| Note | Keys to Press | Description |
-|------|--------------|-------------|
-| **C** | A+S+D+F+G+H+J | All keys down |
-| **D** | A+S+D+F+G+H | All except J |
-| **E** | A+S+D+F+G | First 5 keys |
-| **F** | A+S+D+F | First 4 keys |
-| **G** | A+S+D | First 3 keys |
-| **A** | A+S | First 2 keys |
-| **B** | A | First key only |
-| **C2** | (none) | Open (octave higher) |
+| Note | Fingering Pattern | Description |
+|------|------------------|-------------|
+| **C** | Thumb + All holes closed | Low C - all fingers down |
+| **D** | All holes except thumb & RH4 | Standard D fingering |
+| **E** | LH1,2,3 + RH1,2 closed | Standard E fingering |
+| **F** | LH1,2,3 + RH1 closed | Standard F fingering |
+| **G** | LH1,2,3 closed only | Standard G fingering |
+| **A** | LH1,2 closed only | Standard A fingering |
+| **B** | LH1 closed only | Standard B fingering |
+| **C2** | All holes open | High C - open embouchure |
 
-*Keys correspond to the 7 main tone holes on a flute from left hand to right hand*
+*Fingerings match standard orchestral flute technique used by professional musicians*
 
 ## 🎵 Available Songs
 

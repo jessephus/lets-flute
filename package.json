@@ -4,7 +4,7 @@
   "description": "A web-based rhythm game designed to teach children how to play the orchestral flute",
   "main": "index.html",
   "scripts": {
-    "dev": "npx http-server -p 8080",
+    "dev": "npx http-server -p 8080 -c-1 --cors",
     "test": "echo \"No tests yet\" && exit 0"
   },
   "keywords": [

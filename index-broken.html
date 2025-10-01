@@ -1,19 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Let's Flute - Learn to Play Flute</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <div id="game-container">
-        <header>
-            <h1>Let's Flute 🎵</h1>
-            <div id="tempo-display">🎼 Follow Along Guide</div>
-        </header>
-
-        <div id="main-menu" class="screen">
+<!DOCTYPE html>        <div id="main-menu" class="screen">
             <h2>Welcome to Let's Flute!</h2>
             <p>🎵 A visual and audio guide for flute players 🎵</p>
             
@@ -52,6 +37,38 @@
                 
                 <button id="start-fingering-button" class="game-button">📚 Start Learning</button>
             </div>
+        </div>ead>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Let's Flute - Learn to Play Flute</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="game-container">
+        <header>
+            <h1>Let's Flute 🎵</h1>
+            <div id="tempo-display">🎼 Follow Along Guide</div>
+        </header>
+
+        <div id="main-menu" class="screen">
+            <h2>Welcome to Let's Flute!</h2>
+            <p>🎵 A visual and audio guide for flute players 🎵</p>
+            
+            <div class="song-selection">
+                <h3>Select a Song:</h3>
+                <div id="song-list" class="song-buttons">
+                    <!-- Song buttons will be dynamically generated -->
+                </div>
+            </div>
+            
+            <button id="start-button" class="game-button">▶️ Play Song</button>
+            <div class="instructions">
+                <h3>How to Use:</h3>
+                <p>🎼 Watch the falling notes and listen to the melody</p>
+                <p>🎵 Play along on your real flute using the visual guide</p>
+                <p>📊 The flute diagram shows which keys to press for each note</p>
+                <p>🎯 Notes will automatically play when they reach the red target line</p>
+            </div>
         </div>
 
         <div id="game-screen" class="screen hidden">
@@ -69,9 +86,15 @@
             </div>
         </div>
 
+        <div id="pause-menu" class="screen hidden">
+            <h2>⏸️ Paused</h2>
+            <button id="resume-button" class="game-button">▶️ Resume</button>
+            <button id="quit-button" class="game-button">🏠 Back to Menu</button>
+        </div>
+
         <div id="fingering-screen" class="screen hidden">
             <div id="staff-container">
-                <h2>🎼 Learn Flute Fingerings</h2>
+                <h2>� Learn Flute Fingerings</h2>
                 <p>Click on any note to hear it and see the fingering pattern</p>
                 
                 <div id="treble-staff">

@@ -3,17 +3,25 @@ const GameState = {
     MENU: 'menu',
     PLAYING: 'playing',
     PAUSED: 'paused',
-    GAME_OVER: 'gameOver'
+    GAME_OVER: 'gameOver',
+    FINGERING: 'fingering'
 };
 
-// Valid flute key mappings
-const VALID_FLUTE_KEYS = ['A', 'S', 'D', 'F', 'G', 'H', 'J'];
+// Learning modes
+const LearningMode = {
+    SONG: 'song',
+    FINGERING: 'fingering'
+};
+
+console.log('LearningMode constants loaded:', LearningMode);
 
 class FluteGame {
     constructor() {
+        console.log('FluteGame constructor starting...');
         this.canvas = document.getElementById('game-canvas');
         this.ctx = this.canvas.getContext('2d');
         this.state = GameState.MENU;
+        this.learningMode = LearningMode.SONG;
         this.notes = [];
         this.currentSong = SAMPLE_SONG;
         this.selectedSongIndex = 0;
@@ -34,14 +42,20 @@ class FluteGame {
         
         // Initialize SVG Flute
         this.fluteSVG = null;
+        this.fingeringFluteSVG = null;
         
+        console.log('Initializing canvas...');
         this.initializeCanvas();
+        console.log('Setting up event listeners...');
         this.setupEventListeners();
+        console.log('Creating song buttons...');
         this.createSongButtons();
+        console.log('Showing main menu screen...');
         this.showScreen('main-menu');
         
         // Force initial render to make sure canvas is working
         this.render();
+        console.log('FluteGame constructor completed');
     }
 
     async initializeAudio() {
@@ -244,21 +258,89 @@ class FluteGame {
     }
 
     setupEventListeners() {
-        // Menu buttons
-        document.getElementById('start-button').addEventListener('click', async () => {
-            // Test audio immediately on click
-            if (!this.audioInitialized) {
-                await this.initializeAudio();
-                // Play a test sound to verify audio works
-                setTimeout(() => this.playBeatSound(), 100);
-            }
-            this.startGame();
+        console.log('setupEventListeners starting...');
+        
+        // Mode selection buttons
+        const songModeButton = document.getElementById('song-mode-button');
+        const fingeringModeButton = document.getElementById('fingering-mode-button');
+        
+        console.log('Mode buttons found:', {
+            songModeButton: !!songModeButton,
+            fingeringModeButton: !!fingeringModeButton
         });
-        document.getElementById('pause-button').addEventListener('click', () => this.pauseGame());
-        document.getElementById('resume-button').addEventListener('click', () => this.resumeGame());
-        document.getElementById('quit-button').addEventListener('click', () => this.quitToMenu());
-        document.getElementById('play-again-button').addEventListener('click', () => this.startGame());
-        document.getElementById('menu-button').addEventListener('click', () => this.quitToMenu());
+        
+        if (songModeButton) {
+            console.log('Adding click listener to song mode button');
+            songModeButton.addEventListener('click', () => {
+                console.log('Song mode button clicked!');
+                this.selectMode(LearningMode.SONG);
+            });
+        } else {
+            console.error('song-mode-button not found in DOM');
+        }
+        
+        if (fingeringModeButton) {
+            console.log('Adding click listener to fingering mode button');
+            fingeringModeButton.addEventListener('click', () => {
+                console.log('Fingering mode button clicked!');
+                this.selectMode(LearningMode.FINGERING);
+            });
+        } else {
+            console.error('fingering-mode-button not found in DOM');
+        }
+        
+        // Menu buttons
+        const startButton = document.getElementById('start-button');
+        const startFingeringButton = document.getElementById('start-fingering-button');
+        
+        console.log('Start buttons found:', {
+            startButton: !!startButton,
+            startFingeringButton: !!startFingeringButton
+        });
+        
+        if (startButton) {
+            startButton.addEventListener('click', async () => {
+                console.log('Start button clicked');
+                // Test audio immediately on click
+                if (!this.audioInitialized) {
+                    await this.initializeAudio();
+                    // Play a test sound to verify audio works
+                    setTimeout(() => this.playBeatSound(), 100);
+                }
+                this.startGame();
+            });
+        }
+        
+        if (startFingeringButton) {
+            startFingeringButton.addEventListener('click', async () => {
+                console.log('Start fingering button clicked');
+                if (!this.audioInitialized) {
+                    await this.initializeAudio();
+                }
+                this.startFingeringMode();
+            });
+        }
+        
+        // Other buttons
+        const pauseButton = document.getElementById('pause-button');
+        const resumeButton = document.getElementById('resume-button');
+        const quitButton = document.getElementById('quit-button');
+        const playAgainButton = document.getElementById('play-again-button');
+        const menuButton = document.getElementById('menu-button');
+        const backToMenuButton = document.getElementById('back-to-menu-button');
+        const playNoteButton = document.getElementById('play-note-button');
+        
+        if (pauseButton) pauseButton.addEventListener('click', () => this.pauseGame());
+        if (resumeButton) resumeButton.addEventListener('click', () => this.resumeGame());
+        if (quitButton) quitButton.addEventListener('click', () => this.quitToMenu());
+        if (playAgainButton) playAgainButton.addEventListener('click', () => this.startGame());
+        if (menuButton) menuButton.addEventListener('click', () => this.quitToMenu());
+        if (backToMenuButton) backToMenuButton.addEventListener('click', () => this.quitToMenu());
+        
+        // Fingering mode buttons
+        if (playNoteButton) {
+            playNoteButton.addEventListener('click', () => this.playSelectedNote());
+        }
 
         // Window resize
         window.addEventListener('resize', () => {
@@ -268,6 +350,8 @@ class FluteGame {
                 this.render();
             }
         });
+        
+        console.log('setupEventListeners completed');
     }
 
     showScreen(screenId) {
@@ -328,7 +412,7 @@ class FluteGame {
             hit: false,
             missed: false,
             played: false, // Track if note has been auto-played
-            requiredKeys: BASIC_FINGERINGS[noteData.note] || [],
+            fingering: BASIC_FINGERINGS[noteData.note] || {},
             color: NOTE_COLORS[noteData.note] || '#FFFFFF'
         }));
         
@@ -370,6 +454,92 @@ class FluteGame {
         this.showScreen('main-menu');
     }
 
+    selectMode(mode) {
+        console.log('selectMode called with:', mode);
+        console.log('Current learningMode:', this.learningMode);
+        this.learningMode = mode;
+        
+        // Update button styling
+        const songButton = document.getElementById('song-mode-button');
+        const fingeringButton = document.getElementById('fingering-mode-button');
+        const songContent = document.getElementById('song-mode-content');
+        const fingeringContent = document.getElementById('fingering-mode-content');
+        
+        console.log('Found elements:', {
+            songButton: !!songButton,
+            fingeringButton: !!fingeringButton,
+            songContent: !!songContent,
+            fingeringContent: !!fingeringContent
+        });
+        
+        if (mode === LearningMode.SONG) {
+            console.log('Switching to SONG mode');
+            if (songButton) songButton.classList.add('selected');
+            if (fingeringButton) fingeringButton.classList.remove('selected');
+            if (songContent) songContent.classList.remove('hidden');
+            if (fingeringContent) fingeringContent.classList.add('hidden');
+        } else {
+            console.log('Switching to FINGERING mode');
+            if (fingeringButton) fingeringButton.classList.add('selected');
+            if (songButton) songButton.classList.remove('selected');
+            if (fingeringContent) fingeringContent.classList.remove('hidden');
+            if (songContent) songContent.classList.add('hidden');
+        }
+        console.log('Mode switch completed');
+    }
+
+    async startFingeringMode() {
+        // Initialize audio on first user interaction
+        if (!this.audioInitialized) {
+            await this.initializeAudio();
+        }
+        
+        this.state = GameState.FINGERING;
+        this.showScreen('fingering-screen');
+        
+        // Initialize fingering SVG if not already initialized
+        if (!this.fingeringFluteSVG) {
+            this.fingeringFluteSVG = new FluteSVG('flute-diagram-fingering');
+        }
+        
+        // Initialize treble staff if not already done
+        if (!window.trebleStaff) {
+            window.trebleStaff = new TrebleStaff('treble-staff');
+        }
+        
+        // Set up callback for note selection
+        window.trebleStaff.setNoteClickCallback((noteName) => {
+            this.onNoteSelected(noteName);
+        });
+        
+        console.log('Fingering mode started');
+    }
+
+    onNoteSelected(noteName) {
+        console.log(`Note selected in fingering mode: ${noteName}`);
+        
+        // Update the fingering diagram
+        if (this.fingeringFluteSVG) {
+            this.fingeringFluteSVG.updateFingering(noteName);
+        }
+    }
+
+    playSelectedNote() {
+        if (window.trebleStaff) {
+            const selectedNote = window.trebleStaff.getSelectedNote();
+            if (selectedNote) {
+                this.playNoteSound(selectedNote);
+                
+                // Show visual feedback on the fingering chart
+                if (this.fingeringFluteSVG) {
+                    this.fingeringFluteSVG.triggerHitFeedbackForNote(selectedNote);
+                }
+                
+                console.log(`Playing selected note: ${selectedNote}`);
+            }
+        }
+    }
+
     gameLoop() {
         if (this.state !== GameState.PLAYING) return;
 
@@ -397,7 +567,7 @@ class FluteGame {
         // Use SVG flute preview if available
         if (this.fluteSVG) {
             if (upcomingNote) {
-                this.fluteSVG.showPreview(upcomingNote.note);
+                this.fluteSVG.showPreviewForNote(upcomingNote.note);
             } else {
                 this.fluteSVG.clearPreview();
             }
@@ -407,7 +577,7 @@ class FluteGame {
     showHitFeedback(note) {
         // Use SVG flute feedback if available
         if (this.fluteSVG) {
-            this.fluteSVG.triggerHitFeedback(note.note);
+            this.fluteSVG.triggerHitFeedbackForNote(note.note);
         }
     }
 
@@ -426,7 +596,8 @@ class FluteGame {
                     
                     // Update fingering chart to show current note
                     if (this.fluteSVG) {
-                        this.fluteSVG.updateFingering(note.note);
+                        // Use the authentic flute fingering for accurate display
+                        this.fluteSVG.updateFingeringForNote(note.note);
                     }
                     
                     console.log(`Auto-playing note: ${note.note}`);
@@ -503,17 +674,15 @@ class FluteGame {
     }
 
     drawNote(note) {
-        const keysPressed = note.requiredKeys.length;
-        const laneWidth = this.canvas.width / 7;
-        const noteWidth = laneWidth * keysPressed;
+        // Calculate note width based on fingering complexity (how many holes are closed)
+        const fingering = note.fingering;
+        const closedHoles = Object.values(fingering).filter(val => val === true).length;
+        const baseWidth = 80;
+        const noteWidth = Math.max(baseWidth, baseWidth + (closedHoles * 10));
         const noteHeight = 30;
         
-        // Center the note based on which keys are required
-        let startX = 0;
-        if (keysPressed > 0) {
-            const firstKeyIndex = VALID_FLUTE_KEYS.indexOf(note.requiredKeys[0]);
-            startX = firstKeyIndex * laneWidth;
-        }
+        // Center the note horizontally
+        const startX = (this.canvas.width - noteWidth) / 2;
 
         // Enhance glow if note is currently being played
         const isAtTarget = Math.abs(note.y - this.targetY) <= 10;
@@ -529,12 +698,12 @@ class FluteGame {
             this.ctx.globalAlpha = 0.8;
         }
         
-        this.ctx.fillRect(startX + 5, note.y - noteHeight / 2, noteWidth - 10, noteHeight);
+        this.ctx.fillRect(startX, note.y - noteHeight / 2, noteWidth, noteHeight);
 
         // Draw note border
         this.ctx.strokeStyle = isAtTarget ? '#ffffff' : '#cccccc';
         this.ctx.lineWidth = isAtTarget ? 3 : 2;
-        this.ctx.strokeRect(startX + 5, note.y - noteHeight / 2, noteWidth - 10, noteHeight);
+        this.ctx.strokeRect(startX, note.y - noteHeight / 2, noteWidth, noteHeight);
 
         // Reset effects
         this.ctx.shadowBlur = 0;
@@ -545,6 +714,12 @@ class FluteGame {
         this.ctx.font = 'bold 16px Arial';
         this.ctx.textAlign = 'center';
         this.ctx.fillText(note.note, startX + noteWidth / 2, note.y + 5);
+        
+        // Draw fingering indicator (small dots for closed holes)
+        this.ctx.font = '10px Arial';
+        this.ctx.fillStyle = '#ffffff';
+        const fingeringText = `${closedHoles} holes`;
+        this.ctx.fillText(fingeringText, startX + noteWidth / 2, note.y + 20);
     }
 
     isGameOver() {
@@ -565,5 +740,18 @@ class FluteGame {
 // Initialize game when page loads
 let game;
 window.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM loaded, creating FluteGame instance...');
     game = new FluteGame();
+    console.log('FluteGame instance created:', game);
+    
+    // Add click event listeners with debugging
+    window.debugModeSwitch = () => {
+        console.log('Manual mode switch test');
+        if (game) {
+            console.log('Game instance exists, calling selectMode');
+            game.selectMode('fingering');
+        } else {
+            console.log('No game instance found');
+        }
+    };
 });

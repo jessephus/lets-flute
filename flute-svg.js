@@ -6,24 +6,24 @@ class FluteSVG {
         this.container = document.getElementById(containerId);
         this.currentNote = 'C';
         
-        // Complete fingering chart data matching the game's note names
-        // Now includes both thumb keys: thumb (main) and thumbBb (Bb lever)
+        // Complete fingering chart data matching authentic flute fingering patterns
+        // Based on standard orchestral flute technique
         this.fingeringData = {
-            'C': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false },
-            'D': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
-            'E': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'F': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'G': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'A': { thumb: true, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'B': { thumb: true, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'C2': { thumb: false, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'C': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: true, trill1: false, trill2: false },     // Low C - all holes closed (matches chart)
+            'D': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false },  // D - thumb open, RH4 open (matches chart)
+            'E': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false }, // E - thumb open, RH3&4 open (matches chart)
+            'F': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }, // F - thumb open, RH2,3,4 open (matches chart)
+            'G': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }, // G - thumb open, only LH closed (matches chart)
+            'A': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }, // A - thumb open, LH1&2 closed (matches chart)
+            'B': { thumb: false, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }, // B - thumb open, only LH1 closed (matches chart)
+            'C2': { thumb: false, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }, // High C - all open (matches chart)
             
-            // Additional notes for extended songs - Bb lever used for A#/Bb
-            'C#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
-            'D#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'F#': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'G#': { thumb: true, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
-            'A#': { thumb: true, thumbBb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }
+            // Additional notes for extended songs (using same simplified pattern)
+            'C#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false },
+            'D#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'F#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'G#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false },
+            'A#': { thumb: false, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false }
         };
         
         this.createFingeringChart();
@@ -424,6 +424,28 @@ class FluteSVG {
         }
     }
 
+    // Show preview for upcoming note using flute fingering pattern
+    showPreviewForNote(noteName) {
+        const fingering = this.fingeringData[noteName];
+        if (!fingering) return;
+
+        // Add preview class or style to indicate upcoming note
+        const previewColor = '#FFF3E0'; // Light orange for preview
+
+        if (fingering.thumb) this.setPreviewState('thumb-fill', previewColor);
+        if (fingering.thumbBb) this.setPreviewState('thumb-bb-fill', previewColor);
+        if (fingering.lh1) this.setPreviewState('lh1-fill', previewColor);
+        if (fingering.lh2) this.setPreviewState('lh2-fill', previewColor);
+        if (fingering.lh3) this.setPreviewState('lh3-fill', previewColor);
+        if (fingering.lh4) this.setPreviewState('lh4-fill', previewColor);
+        if (fingering.rh1) this.setPreviewState('rh1-fill', previewColor);
+        if (fingering.rh2) this.setPreviewState('rh2-fill', previewColor);
+        if (fingering.rh3) this.setPreviewState('rh3-fill', previewColor);
+        if (fingering.rh4) this.setPreviewState('rh4-fill', previewColor);
+        if (fingering.trill1) this.setPreviewState('trill1-fill', previewColor);
+        if (fingering.trill2) this.setPreviewState('trill2-fill', previewColor);
+    }
+
     // Show preview for upcoming note (yellow tint)
     showPreview(noteName) {
         const fingering = this.fingeringData[noteName];
@@ -459,41 +481,34 @@ class FluteSVG {
         this.updateFingering(this.currentNote);
     }
 
-    // Convert keyboard keys to note names for compatibility
-    updateFingeringFromKeys(requiredKeys) {
-        // This method provides compatibility with the existing game system
-        // Map keyboard keys to fingering positions for display
-        const keyMap = {
-            'A': 'lh1',
-            'S': 'lh2', 
-            'D': 'lh3',
-            'F': 'rh1',
-            'G': 'rh2',
-            'H': 'rh3',
-            'J': 'rh4' // Note: rh4 doesn't exist in standard flute
-        };
+    // Update fingering display using note name
+    updateFingeringForNote(noteName) {
+        console.log(`SVG updateFingeringForNote called with: ${noteName}`);
+        
+        // Update the main fingering display
+        this.updateFingering(noteName);
+    }
 
-        // Reset all keys
-        this.updateKeyState('thumb-fill', false);
-        this.updateKeyState('thumb-bb-fill', false);
-        this.updateKeyState('lh1-fill', false);
-        this.updateKeyState('lh2-fill', false);
-        this.updateKeyState('lh3-fill', false);
-        this.updateKeyState('lh4-fill', false);
-        this.updateKeyState('rh1-fill', false);
-        this.updateKeyState('rh2-fill', false);
-        this.updateKeyState('rh3-fill', false);
-        this.updateKeyState('rh4-fill', false);
-        this.updateKeyState('trill1-fill', false);
-        this.updateKeyState('trill2-fill', false);
+    // Trigger visual feedback animation using note name
+    triggerHitFeedbackForNote(noteName) {
+        // Brief green flash for successful note hit
+        const hitColor = '#4CAF50';
+        
+        const fingering = this.fingeringData[noteName];
+        if (!fingering) return;
 
-        // Set keys based on required keys
-        requiredKeys.forEach(key => {
-            const fingerPos = keyMap[key];
-            if (fingerPos) {
-                this.updateKeyState(fingerPos + '-fill', true);
-            }
-        });
+        if (fingering.thumb) this.flashKey('thumb-fill', hitColor);
+        if (fingering.thumbBb) this.flashKey('thumb-bb-fill', hitColor);
+        if (fingering.lh1) this.flashKey('lh1-fill', hitColor);
+        if (fingering.lh2) this.flashKey('lh2-fill', hitColor);
+        if (fingering.lh3) this.flashKey('lh3-fill', hitColor);
+        if (fingering.lh4) this.flashKey('lh4-fill', hitColor);
+        if (fingering.rh1) this.flashKey('rh1-fill', hitColor);
+        if (fingering.rh2) this.flashKey('rh2-fill', hitColor);
+        if (fingering.rh3) this.flashKey('rh3-fill', hitColor);
+        if (fingering.rh4) this.flashKey('rh4-fill', hitColor);
+        if (fingering.trill1) this.flashKey('trill1-fill', hitColor);
+        if (fingering.trill2) this.flashKey('trill2-fill', hitColor);
     }
 
     // Trigger visual feedback animation
