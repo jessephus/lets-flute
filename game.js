@@ -543,19 +543,25 @@ class FluteGame {
     }
 
     updateUpcomingNotePreview() {
-        // Find the next upcoming note within preview time
-        const upcomingNote = this.notes.find(note => 
-            !note.played && 
-            (note.time - this.currentTime) > 0 && 
-            (note.time - this.currentTime) <= this.previewTime
-        );
+        // Throttle preview updates to avoid excessive calls
+        const now = Date.now();
+        if (!this.lastPreviewUpdate || (now - this.lastPreviewUpdate) > 100) { // Update every 100ms max
+            this.lastPreviewUpdate = now;
+            
+            // Find the next upcoming note within preview time
+            const upcomingNote = this.notes.find(note => 
+                !note.played && 
+                (note.time - this.currentTime) > 0 && 
+                (note.time - this.currentTime) <= this.previewTime
+            );
 
-        // Use SVG flute preview if available
-        if (this.fluteSVG) {
-            if (upcomingNote) {
-                this.fluteSVG.showPreviewForNote(upcomingNote.note);
-            } else {
-                this.fluteSVG.clearPreview();
+            // Use SVG flute preview if available
+            if (this.fluteSVG) {
+                if (upcomingNote) {
+                    this.fluteSVG.showPreviewForNote(upcomingNote.note);
+                } else {
+                    this.fluteSVG.clearPreview();
+                }
             }
         }
     }
@@ -583,7 +589,10 @@ class FluteGame {
                     // Update fingering chart to show current note
                     if (this.fluteSVG) {
                         // Use the authentic flute fingering for accurate display
+                        console.log(`Updating fingering for played note: ${note.note}`);
                         this.fluteSVG.updateFingeringForNote(note.note);
+                        // Also set it as current note to prevent preview clearing from overriding
+                        this.fluteSVG.currentNote = note.note;
                     }
                     
                     console.log(`Auto-playing note: ${note.note}`);

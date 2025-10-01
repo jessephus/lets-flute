@@ -261,6 +261,31 @@ class FluteSVG {
     }
 
     createChartElements(svg) {
+        // Create SVG filter for glow effect
+        const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+        const filter = document.createElementNS('http://www.w3.org/2000/svg', 'filter');
+        filter.setAttribute('id', 'preview-glow');
+        filter.setAttribute('x', '-50%');
+        filter.setAttribute('y', '-50%');
+        filter.setAttribute('width', '200%');
+        filter.setAttribute('height', '200%');
+        
+        const feGaussianBlur = document.createElementNS('http://www.w3.org/2000/svg', 'feGaussianBlur');
+        feGaussianBlur.setAttribute('stdDeviation', '3');
+        feGaussianBlur.setAttribute('result', 'coloredBlur');
+        
+        const feMerge = document.createElementNS('http://www.w3.org/2000/svg', 'feMerge');
+        const feMergeNode1 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+        feMergeNode1.setAttribute('in', 'coloredBlur');
+        const feMergeNode2 = document.createElementNS('http://www.w3.org/2000/svg', 'feMergeNode');
+        feMergeNode2.setAttribute('in', 'SourceGraphic');
+        
+        feMerge.appendChild(feMergeNode1);
+        feMerge.appendChild(feMergeNode2);
+        filter.appendChild(feGaussianBlur);
+        filter.appendChild(feMerge);
+        defs.appendChild(filter);
+        svg.appendChild(defs);
         // Left side - Thumb and Bb lever (side-by-side horizontally)
         const thumbGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
         thumbGroup.setAttribute('id', 'thumb-keys');
@@ -588,9 +613,13 @@ class FluteSVG {
         if (element) {
             if (isPressed) {
                 element.setAttribute('fill', '#333'); // Dark fill for pressed keys
+                console.log(`Updated ${elementId} to pressed (dark)`);
             } else {
                 element.setAttribute('fill', 'white'); // White fill for open keys
+                console.log(`Updated ${elementId} to open (white)`);
             }
+        } else {
+            console.warn(`Element with ID ${elementId} not found in container:`, this.container);
         }
     }
 
@@ -599,21 +628,62 @@ class FluteSVG {
         const fingering = this.fingeringData[noteName];
         if (!fingering) return;
 
-        // Add preview class or style to indicate upcoming note
-        const previewColor = '#FFF3E0'; // Light orange for preview
-
-        if (fingering.thumb) this.setPreviewState('thumb-fill', previewColor);
-        if (fingering.thumbBb) this.setPreviewState('thumb-bb-fill', previewColor);
-        if (fingering.lh1) this.setPreviewState('lh1-fill', previewColor);
-        if (fingering.lh2) this.setPreviewState('lh2-fill', previewColor);
-        if (fingering.lh3) this.setPreviewState('lh3-fill', previewColor);
-        if (fingering.lh4) this.setPreviewState('lh4-fill', previewColor);
-        if (fingering.rh1) this.setPreviewState('rh1-fill', previewColor);
-        if (fingering.rh2) this.setPreviewState('rh2-fill', previewColor);
-        if (fingering.rh3) this.setPreviewState('rh3-fill', previewColor);
-        if (fingering.rh4) this.setPreviewState('rh4-fill', previewColor);
-        if (fingering.trill1) this.setPreviewState('trill1-fill', previewColor);
-        if (fingering.trill2) this.setPreviewState('trill2-fill', previewColor);
+        console.log(`Showing preview for upcoming note: ${noteName}`);
+        
+        // Only show preview if this is different from the current note
+        if (noteName === this.currentNote) {
+            return; // Don't preview the same note that's currently playing
+        }
+        
+        // Get current note fingering to avoid overriding active keys
+        const currentFingering = this.fingeringData[this.currentNote];
+        
+        // Add glow effect to keys that will be pressed AND are not currently pressed
+        if (fingering.thumb && (!currentFingering || !currentFingering.thumb)) {
+            this.setPreviewState('thumb-fill', true);
+        }
+        if (fingering.thumbBb && (!currentFingering || !currentFingering.thumbBb)) {
+            this.setPreviewState('thumbBb-fill', true);
+        }
+        if (fingering.lh1 && (!currentFingering || !currentFingering.lh1)) {
+            this.setPreviewState('lh1-fill', true);
+        }
+        if (fingering.lh2 && (!currentFingering || !currentFingering.lh2)) {
+            this.setPreviewState('lh2-fill', true);
+        }
+        if (fingering.lh3 && (!currentFingering || !currentFingering.lh3)) {
+            this.setPreviewState('lh3-fill', true);
+        }
+        if (fingering.lh4 && (!currentFingering || !currentFingering.lh4)) {
+            this.setPreviewState('lh4-fill', true);
+        }
+        if (fingering.rh1 && (!currentFingering || !currentFingering.rh1)) {
+            this.setPreviewState('rh1-fill', true);
+        }
+        if (fingering.rh2 && (!currentFingering || !currentFingering.rh2)) {
+            this.setPreviewState('rh2-fill', true);
+        }
+        if (fingering.rh3 && (!currentFingering || !currentFingering.rh3)) {
+            this.setPreviewState('rh3-fill', true);
+        }
+        if (fingering.rh4 && (!currentFingering || !currentFingering.rh4)) {
+            this.setPreviewState('rh4-fill', true);
+        }
+        if (fingering.trill1 && (!currentFingering || !currentFingering.trill1)) {
+            this.setPreviewState('trill1-fill', true);
+        }
+        if (fingering.trill2 && (!currentFingering || !currentFingering.trill2)) {
+            this.setPreviewState('trill2-fill', true);
+        }
+        if (fingering.bRoller && (!currentFingering || !currentFingering.bRoller)) {
+            this.setPreviewState('b-roller-fill', true);
+        }
+        if (fingering.cRoller && (!currentFingering || !currentFingering.cRoller)) {
+            this.setPreviewState('c-roller-fill', true);
+        }
+        if (fingering.cSharp && (!currentFingering || !currentFingering.cSharp)) {
+            this.setPreviewState('c-sharp-fill', true);
+        }
     }
 
     // Show preview for upcoming note (yellow tint)
@@ -638,17 +708,38 @@ class FluteSVG {
         if (fingering.trill2) this.setPreviewState('trill2-fill', previewColor);
     }
 
-    setPreviewState(elementId, color) {
+    setPreviewState(elementId, useGlow) {
         const element = this.container.querySelector('#' + elementId);
         if (element) {
-            element.setAttribute('fill', color);
+            if (useGlow) {
+                // Add glow effect with green color
+                element.style.filter = 'drop-shadow(0 0 8px #4CAF50)';
+            } else {
+                // Remove glow effect
+                element.style.filter = 'none';
+            }
         }
     }
 
     // Clear all previews
     clearPreview() {
-        // Reset all keys to their proper states based on current note
-        this.updateFingering(this.currentNote);
+        console.log('clearPreview called - removing all glow effects');
+        
+        // Remove glow effects from all elements
+        const allElements = [
+            'thumb-fill', 'thumbBb-fill', 'lh1-fill', 'lh2-fill', 'lh3-fill', 'lh4-fill',
+            'rh1-fill', 'rh2-fill', 'rh3-fill', 'rh4-fill', 'trill1-fill', 'trill2-fill',
+            'b-roller-fill', 'c-roller-fill', 'c-sharp-fill'
+        ];
+        
+        allElements.forEach(elementId => {
+            this.setPreviewState(elementId, false);
+        });
+        
+        // Ensure current fingering is properly displayed
+        if (this.currentNote) {
+            this.updateFingering(this.currentNote);
+        }
     }
 
     // Update fingering display using note name
