@@ -9,21 +9,229 @@ class FluteSVG {
         // Complete fingering chart data matching authentic flute fingering patterns
         // Based on the provided professional flute fingering chart
         this.fingeringData = {
-            'C': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: true, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },     // Middle C - thumb, thumbBb, LH1-3, RH1-4 all closed
-            'D': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },  // D - same as C but RH4 open
-            'E': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // E - thumb open, thumbBb closed, LH1-3 closed, RH1-2 closed, RH3-4 open
-            'F': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // F - thumb open, thumbBb closed, LH1-3 closed, only RH1 closed
-            'G': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // G - thumb open, thumbBb closed, LH1-3 closed, all RH open
-            'A': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // A - thumb open, thumbBb closed, LH1-2 closed, LH3 open, all RH open
-            'B': { thumb: false, thumbBb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // B - thumb open, thumbBb closed, only LH1 closed, all others open
-            'C2': { thumb: false, thumbBb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // High C - only thumbBb closed, all holes open
+            'C': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: true, 
+                rh3: true, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: true, 
+                cSharp: true 
+            },     // Middle C - thumb closed, Bb lever open, LH1-3 closed, RH1-3 closed, cRoller and cSharp closed
+            'D': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: true, 
+                rh3: true, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            },  // D - thumb closed, Bb lever open, same as C but RH4 open
+            'E': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: true, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            }, // E - thumb closed, Bb lever open, LH1-3 closed, RH1-2 closed, RH3-4 open
+            'F': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: false, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false
+            }, // F - thumb closed, Bb lever open, LH1-3 closed, only RH1 closed
+            'G': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false
+            }, // G - thumb closed, Bb lever open, LH1-3 closed, all RH open
+            'A': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: false, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false
+            }, // A - thumb closed, Bb lever open, LH1-2 closed, LH3 open, all RH open
+            'B': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: false, 
+                lh3: false, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false
+            }, // B - thumb closed, Bb lever open, only LH1 closed, all others open
+            'C2': { 
+                thumb: false, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: false, 
+                lh3: false, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: true, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false
+            }, // High C - thumb open, Bb lever open, all holes open
             
             // Additional notes for extended songs (using similar patterns)
-            'C#': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'D#': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'F#': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'G#': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'A#': { thumb: false, thumbBb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }
+            'C#': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: true, 
+                rh3: false, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            },
+            'D#': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: true, 
+                rh2: false, 
+                rh3: false, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            },
+            'F#': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: true, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            },
+            'G#': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: true, 
+                lh3: false, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            },
+            'A#': { 
+                thumb: true, 
+                thumbBb: false, 
+                lh1: true, 
+                lh2: false, 
+                lh3: false, 
+                lh4: false, 
+                rh1: false, 
+                rh2: false, 
+                rh3: false, 
+                rh4: false, 
+                trill1: false, 
+                trill2: false, 
+                bRoller: false, 
+                cRoller: false, 
+                cSharp: false 
+            }
         };
         
         this.createFingeringChart();
