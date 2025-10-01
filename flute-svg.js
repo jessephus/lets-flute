@@ -7,23 +7,23 @@ class FluteSVG {
         this.currentNote = 'C';
         
         // Complete fingering chart data matching authentic flute fingering patterns
-        // Based on standard orchestral flute technique
+        // Based on the provided professional flute fingering chart
         this.fingeringData = {
-            'C': { thumb: true, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: true, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },     // Low C - all holes closed (matches chart)
-            'D': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },  // D - thumb open, RH4 open (matches chart)
-            'E': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // E - thumb open, RH3&4 open (matches chart)
-            'F': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // F - thumb open, RH2,3,4 open (matches chart)
-            'G': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // G - thumb open, only LH closed (matches chart)
-            'A': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // A - thumb open, LH1&2 closed (matches chart)
-            'B': { thumb: false, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // B - thumb open, only LH1 closed (matches chart)
-            'C2': { thumb: false, thumbBb: false, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // High C - all open (matches chart)
+            'C': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: true, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },     // Middle C - thumb, thumbBb, LH1-3, RH1-4 all closed
+            'D': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: true, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },  // D - same as C but RH4 open
+            'E': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // E - thumb open, thumbBb closed, LH1-3 closed, RH1-2 closed, RH3-4 open
+            'F': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // F - thumb open, thumbBb closed, LH1-3 closed, only RH1 closed
+            'G': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // G - thumb open, thumbBb closed, LH1-3 closed, all RH open
+            'A': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // A - thumb open, thumbBb closed, LH1-2 closed, LH3 open, all RH open
+            'B': { thumb: false, thumbBb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // B - thumb open, thumbBb closed, only LH1 closed, all others open
+            'C2': { thumb: false, thumbBb: true, lh1: false, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }, // High C - only thumbBb closed, all holes open
             
-            // Additional notes for extended songs (using same simplified pattern)
-            'C#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'D#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'F#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'G#': { thumb: false, thumbBb: false, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
-            'A#': { thumb: false, thumbBb: false, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }
+            // Additional notes for extended songs (using similar patterns)
+            'C#': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: true, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
+            'D#': { thumb: true, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: true, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
+            'F#': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: true, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
+            'G#': { thumb: false, thumbBb: true, lh1: true, lh2: true, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false },
+            'A#': { thumb: false, thumbBb: true, lh1: true, lh2: false, lh3: false, lh4: false, rh1: false, rh2: false, rh3: false, rh4: false, trill1: false, trill2: false, bRoller: false, cRoller: false, cSharp: false }
         };
         
         this.createFingeringChart();
