@@ -328,7 +328,6 @@ class FluteGame {
         const playAgainButton = document.getElementById('play-again-button');
         const menuButton = document.getElementById('menu-button');
         const backToMenuButton = document.getElementById('back-to-menu-button');
-        const playNoteButton = document.getElementById('play-note-button');
         
         if (pauseButton) pauseButton.addEventListener('click', () => this.pauseGame());
         if (resumeButton) resumeButton.addEventListener('click', () => this.resumeGame());
@@ -336,11 +335,6 @@ class FluteGame {
         if (playAgainButton) playAgainButton.addEventListener('click', () => this.startGame());
         if (menuButton) menuButton.addEventListener('click', () => this.quitToMenu());
         if (backToMenuButton) backToMenuButton.addEventListener('click', () => this.quitToMenu());
-        
-        // Fingering mode buttons
-        if (playNoteButton) {
-            playNoteButton.addEventListener('click', () => this.playSelectedNote());
-        }
 
         // Window resize
         window.addEventListener('resize', () => {
@@ -522,21 +516,13 @@ class FluteGame {
         if (this.fingeringFluteSVG) {
             this.fingeringFluteSVG.updateFingering(noteName);
         }
-    }
-
-    playSelectedNote() {
-        if (window.trebleStaff) {
-            const selectedNote = window.trebleStaff.getSelectedNote();
-            if (selectedNote) {
-                this.playNoteSound(selectedNote);
-                
-                // Show visual feedback on the fingering chart
-                if (this.fingeringFluteSVG) {
-                    this.fingeringFluteSVG.triggerHitFeedbackForNote(selectedNote);
-                }
-                
-                console.log(`Playing selected note: ${selectedNote}`);
-            }
+        
+        // Automatically play the note when selected
+        this.playNoteSound(noteName);
+        
+        // Show visual feedback on the fingering chart
+        if (this.fingeringFluteSVG) {
+            this.fingeringFluteSVG.triggerHitFeedbackForNote(noteName);
         }
     }
 

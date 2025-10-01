@@ -155,20 +155,10 @@ class TrebleStaff {
         }
         
         // Update note info display
-        const noteDisplay = document.getElementById('selected-note-display');
-        const noteDescription = document.getElementById('note-description');
-        const playButton = document.getElementById('play-note-button');
+        const noteDisplay = document.getElementById('current-note-display');
         
         if (noteDisplay) {
             noteDisplay.textContent = `${noteName} - ${this.notePositions[noteName].name}`;
-        }
-        
-        if (noteDescription) {
-            noteDescription.textContent = `Selected note: ${noteName}. See the fingering pattern below and click "Play Note" to hear it.`;
-        }
-        
-        if (playButton) {
-            playButton.disabled = false;
         }
         
         // Call callback function if provided
@@ -199,21 +189,11 @@ class TrebleStaff {
         }
         this.selectedNote = null;
         
-        // Clear displays
-        const noteDisplay = document.getElementById('selected-note-display');
-        const noteDescription = document.getElementById('note-description');
-        const playButton = document.getElementById('play-note-button');
+        // Clear display
+        const noteDisplay = document.getElementById('current-note-display');
         
         if (noteDisplay) {
             noteDisplay.textContent = 'Select a note above';
-        }
-        
-        if (noteDescription) {
-            noteDescription.textContent = 'Click on the staff to explore fingerings';
-        }
-        
-        if (playButton) {
-            playButton.disabled = true;
         }
     }
 }
